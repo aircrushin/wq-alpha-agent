@@ -1,0 +1,42 @@
+{
+  "_comment": "Market-neutral quality factor example. Requires careful weight balancing.",
+  "defaults": {
+    "instrumentType": "EQUITY",
+    "region": "USA",
+    "universe": "TOP3000",
+    "delay": 1,
+    "decay": 0,
+    "neutralization": "MARKET",
+    "truncation": 0.08,
+    "pasteurization": "ON",
+    "unitHandling": "VERIFY",
+    "nanHandling": "ON",
+    "language": "FASTEXPR",
+    "visualization": false,
+    "auto_submit": false,
+    "submission_mode": "qualified_only",
+    "min_sharpe": 1.50,
+    "min_fitness": 1.1,
+    "max_turnover": 0.15
+  },
+  "alphas": [
+    {
+      "name": "ROE_MktNeutral_252d",
+      "expression": "rank(group_neutralize(ts_rank(operating_income / equity, 252), market))",
+      "family": "profitability",
+      "decay": 0
+    },
+    {
+      "name": "BP_Value_MktNeutral_252d",
+      "expression": "rank(group_neutralize(ts_rank(book_value_per_share_reported_value / close, 252), market))",
+      "family": "value",
+      "decay": 0
+    },
+    {
+      "name": "Multi_Quality_MktNeutral",
+      "expression": "roe = group_neutralize(ts_rank(operating_income / equity, 252), market);\nbp = group_neutralize(ts_rank(book_value_per_share_reported_value / close, 252), market);\neps = group_neutralize(ts_rank(est_eps / close, 252), market);\nsignal = 0.40 * roe + 0.30 * bp + 0.30 * eps;\nrank(signal)",
+      "family": "multi_quality",
+      "decay": 4
+    }
+  ]
+}

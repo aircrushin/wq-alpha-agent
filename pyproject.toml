@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wq-alpha-agent"
+version = "0.1.0"
+description = "Automated WorldQuant BRAIN alpha factor research agent — generate, simulate, diversity-check, submit, and evolve alpha expressions with LLM-driven automation."
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "UltraV"}
+]
+keywords = ["worldquant", "brain", "alpha", "quant", "factor", "mining", "llm-agent"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.28",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+    "black>=23.0",
+    "ruff>=0.1",
+]
+wqb = ["wqb"]
+
+[project.scripts]
+wq-batch = "scripts.run_batch:main"
+wq-search-fields = "scripts.search_fields:main"
+wq-evolve = "scripts.evolve_skill:main"
+wq-verify = "scripts.verify_status:main"
+wq-build-blacklist = "scripts.build_blacklist:main"
+
+[tool.setuptools.packages.find]
+include = ["wq_alpha_agent*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

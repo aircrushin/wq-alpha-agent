@@ -1,0 +1,49 @@
+{
+  "_comment": "Reversal + Fundamental hybrid example batch.",
+  "defaults": {
+    "instrumentType": "EQUITY",
+    "region": "USA",
+    "universe": "TOP3000",
+    "delay": 1,
+    "decay": 12,
+    "neutralization": "INDUSTRY",
+    "truncation": 0.08,
+    "pasteurization": "ON",
+    "unitHandling": "VERIFY",
+    "nanHandling": "ON",
+    "language": "FASTEXPR",
+    "visualization": false,
+    "auto_submit": false,
+    "submission_mode": "qualified_only",
+    "min_sharpe": 1.25,
+    "min_fitness": 1.0,
+    "max_turnover": 0.35
+  },
+  "alphas": [
+    {
+      "name": "Overnight_Reversal",
+      "expression": "rank(-((open - ts_delay(close, 1)) / ts_delay(close, 1)))",
+      "family": "technical",
+      "decay": 10
+    },
+    {
+      "name": "Close_Open_Reversal",
+      "expression": "rank(-((close - open) / open))",
+      "family": "technical",
+      "decay": 12
+    },
+    {
+      "name": "Reversal_ROE_Hybrid",
+      "expression": "fund = group_rank(ts_rank(operating_income / equity, 252), subindustry);\npx = rank(-((close - open) / open));\nsignal = 0.55 * fund + 0.45 * px;\ntrade_when(volume > adv20, rank(group_neutralize(signal, subindustry)), -1)",
+      "family": "hybrid_profitability",
+      "decay": 4,
+      "neutralization": "SUBINDUSTRY"
+    },
+    {
+      "name": "Reversal_EPS_Hybrid",
+      "expression": "fund = group_rank(ts_rank(est_eps / close, 252), industry);\npx = rank(-((close - open) / open));\nsignal = 0.55 * fund + 0.45 * px;\ntrade_when(volume > adv20, rank(group_neutralize(signal, industry)), -1)",
+      "family": "hybrid_analyst",
+      "decay": 4
+    }
+  ]
+}

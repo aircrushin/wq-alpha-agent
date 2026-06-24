@@ -1,0 +1,42 @@
+# Secrets & credentials
+.env
+credential.txt
+*.pem
+*.key
+secrets/
+
+# Local databases (contain personal alpha records)
+alpha_db.json
+batch_submit_results.json
+*.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+.venv_wq/
+venv/
+dist/
+build/
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Claude Code local
+.claude/
