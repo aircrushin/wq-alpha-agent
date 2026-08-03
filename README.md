@@ -210,8 +210,3 @@ If you want to share research lessons, summarize them into general rules and add
 ## License
 
 MIT — see [LICENSE](LICENSE).
-
-## Acknowledgments
-
-Built from extensive empirical research on the WorldQuant BRAIN platform.
-Thanks to the QuantML factor research community for feedback and ideas.
